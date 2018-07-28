@@ -24,6 +24,9 @@ router.post('/login', (req, res) => {
 
     const UserModel = mongoose.model('UserModel');
 
+    if(!req.body || !req.body.username || !req.body.password) {
+        res.json({err:'invalid request'});
+    }
     UserModel.findOneAndUpdate({
         username: req.body.username,
         password: req.body.password
@@ -31,6 +34,8 @@ router.post('/login', (req, res) => {
         if (err || result == null) {
             res.json(err || {message:'User does not exist'});
         }
+
+        console.log(result);
 
         res.json({
             token:result.token,
