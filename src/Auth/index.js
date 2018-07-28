@@ -31,8 +31,9 @@ router.post('/login', (req, res) => {
         username: req.body.username,
         password: req.body.password
     },{$set:{token:nanoid()}}, {new:false}, (err, result) => {
-        if (err || !result.length) {
+        if (err || result == null) {
             res.json(err || {message:'User does not exist'});
+            return false;
         }
 
         console.log(result);
