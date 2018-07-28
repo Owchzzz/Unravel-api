@@ -20,7 +20,7 @@ router.post('/register', (req, res) => {
 });
 
 router.post('/login', (req, res) => {
-    console.log('Requestion login:', req.body.username);
+    console.log('Requesting login:', req.body.username,req.body.password);
 
     const UserModel = mongoose.model('UserModel');
 
@@ -30,8 +30,8 @@ router.post('/login', (req, res) => {
     UserModel.findOneAndUpdate({
         username: req.body.username,
         password: req.body.password
-    },{$set:{token:nanoid()}}, {new:true}, (err, result) => {
-        if (err || result == null) {
+    },{$set:{token:nanoid()}}, {new:false}, (err, result) => {
+        if (err || !result.length) {
             res.json(err || {message:'User does not exist'});
         }
 
