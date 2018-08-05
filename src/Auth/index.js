@@ -28,6 +28,8 @@ router.post('/login', (req, res) => {
 
         if(!req.body || !req.body.username || !req.body.password) {
             res.json({err:'invalid request'});
+            res.end();
+            return false;
         }
         UserModel.findOneAndUpdate({
             username: req.body.username,
