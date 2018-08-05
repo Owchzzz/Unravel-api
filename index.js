@@ -32,21 +32,6 @@ router.get('/', (req,res) => {
     res.json({ message: 'Server Active'});
 });
 
-router.get('/users', (req,res) => {
-    try {
-
-        UserModel.find({}).exec( (err, users) => {
-            if(err) {
-                res.send('error has occured');
-            }
-            else {
-                res.json(users);
-            }
-        });
-    } catch(e) {
-        console.log(e);
-    }
-});
 
 router.use('/auth',Auth);
 router.use('/actions/flags',Flags);

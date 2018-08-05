@@ -14,8 +14,8 @@ router.post('/register', (req, res) => {
     user.save((err, result) => {
         if (err)
             res.json(err);
-
-        res.json(result);
+        else
+            res.json(result);
     });
 });
 
@@ -37,15 +37,8 @@ router.post('/login', (req, res) => {
                 username: req.body.username,
                 password: req.body.password
             },{$set:{token:nanoid()}}, {new:true}, (err, result) => {
-                if (err || result == null) {
-                    res.json({message:'User does not exist'});
-                    res.end();
-                    return false;
-                }
-                else {
-    
-                    console.log(result);
-    
+                
+                if(result) {
                     res.json({
                         token:result.token,
                         message: 'Success'
