@@ -22,42 +22,51 @@ router.post('/register', (req, res) => {
 router.post('/login', (req, res) => {
     console.log('Requesting login:', req.body.username,req.body.password);
 
-    const UserModel = mongoose.model('UserModel');
+    try {
 
-    if(!req.body || !req.body.username || !req.body.password) {
-        res.json({err:'invalid request'});
-    }
-    UserModel.findOneAndUpdate({
-        username: req.body.username,
-        password: req.body.password
-    },{$set:{token:nanoid()}}, {new:false}, (err, result) => {
-        if (err || result == null) {
-            res.json(err || {message:'User does not exist'});
-            return false;
+        const UserModel = mongoose.model('UserModel');
+
+        if(!req.body || !req.body.username || !req.body.password) {
+            res.json({err:'invalid request'});
         }
+        UserModel.findOneAndUpdate({
+            username: req.body.username,
+            password: req.body.password
+        },{$set:{token:nanoid()}}, {new:true}, (err, result) => {
+            if (err || result == null) {
+                res.json(err || {message:'User does not exist'});
+                return false;
+            }
 
-        console.log(result);
+            console.log(result);
 
-        res.json({
-            token:result.token,
-            message: 'Success'
-        });
-    })
+            res.json({
+                token:result.token,
+                message: 'Success'
+            });
+        })
+    } catch(e) {
+        console.log('Error when loggin in user');
+    }
 });
 
 router.post('/logout', (req, res) => {
-    
-    const UserModel = mongoose.model('UserModel');
-    let params = {token: req.body.token};
-    UserModel.findOneAndUpdate(params, {$set:{token:false}}, {new:true}, (err, result) => {
-        if(err || result == null) {
-            res.json(err || {message: 'User is not logged in'})
-        }
+    try {
+        const UserModel = mongoose.model('UserModel');
+        let params = {token: req.body.token};
+        UserModel.findOneAndUpdate(params, {$set:{token:false}}, {new:true}, (err, result) => {
+            if(err || result == null) {
+                res.json(err || {message: 'User is not logged in'})
+            }
 
-        res.json({
-            message: 'User has been logged out',
-            user: result.username
-        });
-    })
+            res.json({
+                message: 'User has been logged out',
+                user: result.username
+            });
+        })
+    } catch(e) {
+        console.log('Error when logging out user');
+    }
+    
 });
 module.exports = router;

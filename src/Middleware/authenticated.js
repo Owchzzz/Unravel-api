@@ -1,13 +1,22 @@
 const mongoose = require('mongoose');
 
-module.exports = (opts) => {
+module.exports = ((opts) => {
 
     return (req, res, next) => {
+        console.log('Request came in for authentication');
         const UserModel=mongoose.model('UserModel');
 
-        if(req.body.token) {
-            let token = req.body.token;
-            let user = UserModel.findOne({token}).then(result => {
+        if(req.headers.authorization && req.headers.authorization.split(' ')[0] === 'Bearer') {
+            let token = req.headers.authorization.split(' ')[1];
+            console.log('token:',token);
+            let user = UserModel.findOne({'token':token}, (err,result) => {
+                console.log(err,result);
+                if(err || result == null) {
+                    
+                    res.json({err:err});
+                    return false;
+                }
+                console.log('authentication Result:',result);
                 req.user = result;
                 next();
             });
@@ -15,6 +24,7 @@ module.exports = (opts) => {
         }
         else {
             res.json({'err': 'token not valid'});
+            return false;
         }
     }
-}
+})();

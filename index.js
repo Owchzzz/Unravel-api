@@ -29,28 +29,23 @@ const router = express.Router();
 
 
 router.get('/', (req,res) => {
-    res.json({ message: 'Recieved request'});
+    res.json({ message: 'Server Active'});
 });
 
 router.get('/users', (req,res) => {
-    UserModel.find({}).exec( (err, users) => {
-        if(err) {
-            res.send('error has occured');
-        }
-        else {
-            res.json(users);
-        }
-    });
-});
+    try {
 
-/**
- * Login a new user
- * @param {String} username
- * @param {String} password
- * 
- */
-router.post('auth/login', (req, res) => {
-    Auth.Login(req.params, mongoose);
+        UserModel.find({}).exec( (err, users) => {
+            if(err) {
+                res.send('error has occured');
+            }
+            else {
+                res.json(users);
+            }
+        });
+    } catch(e) {
+        console.log(e);
+    }
 });
 
 router.use('/auth',Auth);
