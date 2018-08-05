@@ -40,13 +40,15 @@ router.post('/login', (req, res) => {
                 res.end();
                 return false;
             }
+            else {
 
-            console.log(result);
+                console.log(result);
 
-            res.json({
-                token:result.token,
-                message: 'Success'
-            });
+                res.json({
+                    token:result.token,
+                    message: 'Success'
+                });
+            }
         })
     } catch(e) {
         console.log('Error when loggin in user');
