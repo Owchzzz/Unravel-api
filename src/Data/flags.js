@@ -7,12 +7,16 @@ router.get('/',(req, res) => {
     const FlagModel = mongoose.model('FlagModel');
     FlagModel.find({}, (err, flags) => {
         if(err || !flags.length){
-            res.json(err);
+            res.json({message:'no flags'});
             return false;
         }
-        res.json(flags);
+        else {
+            res.json(flags);
+
+        }
+        
     });
-    res.end();
+
 });
 
 module.exports = router;
