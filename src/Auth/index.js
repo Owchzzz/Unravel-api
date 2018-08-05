@@ -48,6 +48,8 @@ router.post('/login', (req, res) => {
     } catch(e) {
         console.log('Error when loggin in user');
     }
+
+    res.end();
 });
 
 router.post('/logout', (req, res) => {
@@ -67,6 +69,6 @@ router.post('/logout', (req, res) => {
     } catch(e) {
         console.log('Error when logging out user');
     }
-    
+    res.end();
 });
 module.exports = router;

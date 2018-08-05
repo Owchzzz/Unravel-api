@@ -23,6 +23,7 @@ router.post('/place',(req, res) => {
         }
             
     });
+    res.end();
 });
 
 

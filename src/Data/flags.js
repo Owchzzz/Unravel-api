@@ -12,6 +12,7 @@ router.get('/',(req, res) => {
         }
         res.json(flags);
     });
+    res.end();
 });
 
 module.exports = router;

@@ -14,6 +14,7 @@ module.exports = ((opts) => {
                 if(err || result == null) {
                     
                     res.json({err:err});
+                    res.end();
                     return false;
                 }
                 console.log('authentication Result:',result);
