@@ -26,26 +26,24 @@ router.post('/login', (req, res) => {
 
         const UserModel = mongoose.model('UserModel');
 
-        if(!req.body || !req.body.username || !req.body.password) {
-            res.json({err:'invalid request'});
-            res.end();
-            return false;
-        }
-        else {
+        
 
             UserModel.findOneAndUpdate({
                 username: req.body.username,
                 password: req.body.password
             },{$set:{token:nanoid()}}, {new:true}, (err, result) => {
-                
-                if(result) {
+                if(err) {
+                    res.json({err});
+                    res.end();
+                }
+                else {
                     res.json({
                         token:result.token,
                         message: 'Success'
                     });
                 }
             });
-        }
+        
     } catch(Error) {
         console.log('Error when loggin in user');
     }
