@@ -32,8 +32,8 @@ router.post('/login', (req, res) => {
                 username: req.body.username,
                 password: req.body.password
             },{$set:{token:nanoid()}}, {new:true}, (err, result) => {
-                if(err) {
-                    res.json({err});
+                if(err || result == null) {
+                    res.json({message:'no user found'});
                     res.end();
                 }
                 else {
