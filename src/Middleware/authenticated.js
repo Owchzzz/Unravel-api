@@ -11,15 +11,18 @@ module.exports = ((opts) => {
 
             let user = UserModel.findOne({'token':token}, (err,result) => {
                 console.log(err,result);
-                if(err || result == null) {
+                if(err || !result.length) {
                     
-                    res.json({err:err});
+                    res.json({message:'invalid token'});
                     res.end();
                     return false;
                 }
-                console.log('authentication Result:',result);
-                req.user = result;
-                next();
+
+                else {
+                    console.log('authentication Result:',result);
+                    req.user = result;
+                    next();
+                }
             });
             
         }
