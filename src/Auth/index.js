@@ -41,6 +41,7 @@ router.post('/login', (req, res) => {
                         token:result.token,
                         message: 'Success'
                     });
+                    res.end();
                 }
             });
         
@@ -48,7 +49,6 @@ router.post('/login', (req, res) => {
         console.log('Error when loggin in user');
     }
 
-    res.end();
 });
 
 router.post('/logout', (req, res) => {
