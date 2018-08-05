@@ -8,7 +8,7 @@ module.exports = ((opts) => {
 
         if(req.headers.authorization && req.headers.authorization.split(' ')[0] === 'Bearer') {
             let token = req.headers.authorization.split(' ')[1];
-            console.log('token:',token);
+
             let user = UserModel.findOne({'token':token}, (err,result) => {
                 console.log(err,result);
                 if(err || result == null) {

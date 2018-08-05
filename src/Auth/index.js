@@ -31,26 +31,29 @@ router.post('/login', (req, res) => {
             res.end();
             return false;
         }
-        UserModel.findOneAndUpdate({
-            username: req.body.username,
-            password: req.body.password
-        },{$set:{token:nanoid()}}, {new:true}, (err, result) => {
-            if (err || result == null) {
-                res.json({message:'User does not exist'});
-                res.end();
-                return false;
-            }
-            else {
+        else {
 
-                console.log(result);
-
-                res.json({
-                    token:result.token,
-                    message: 'Success'
-                });
-            }
-        })
-    } catch(e) {
+            UserModel.findOneAndUpdate({
+                username: req.body.username,
+                password: req.body.password
+            },{$set:{token:nanoid()}}, {new:true}, (err, result) => {
+                if (err || result == null) {
+                    res.json({message:'User does not exist'});
+                    res.end();
+                    return false;
+                }
+                else {
+    
+                    console.log(result);
+    
+                    res.json({
+                        token:result.token,
+                        message: 'Success'
+                    });
+                }
+            });
+        }
+    } catch(Error) {
         console.log('Error when loggin in user');
     }
 
