@@ -37,10 +37,7 @@ router.post('/login', (req, res) => {
                     res.end();
                 }
                 else {
-                    res.json({
-                        token:result.token,
-                        message: 'Success'
-                    });
+                    res.json(result);
                     res.end();
                 }
             });
