@@ -13,7 +13,7 @@ module.exports = ((opts) => {
                 if(err || result == null) {
                     
                     res.json({message:'invalid token'});
-                    res.end();
+                   
                     return false;
                 }
 

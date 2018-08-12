@@ -14,7 +14,7 @@ router.post('/place',(req, res) => {
     fm.user_id = req.user._id;
     fm.answer = body.answer;
     fm.save((err, result) => {
-        if(err) {
+        if(err || result == null) {
             res.json(err);
         }
         else {
@@ -22,7 +22,6 @@ router.post('/place',(req, res) => {
         }
             
     });
-    res.end();
 });
 
 
