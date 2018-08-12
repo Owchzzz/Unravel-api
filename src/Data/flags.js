@@ -3,6 +3,8 @@ const router = express.Router();
 const mongoose = require('mongoose');
 
 
+router.use(require('../Middleware/authenticated'));
+
 router.get('/',(req, res) => {
     const FlagModel = mongoose.model('FlagModel');
     FlagModel.find({}, (err, flags) => {
