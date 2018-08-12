@@ -21,4 +21,20 @@ router.get('/',(req, res) => {
 
 });
 
+router.post('/single',(req, res) => {
+    const FlagModel = mongoose.model('FlagModel');
+    let body = req.body;
+    let _id = body._id;
+    FlagModel.findOne({_id}, (err, flag) => {
+        if(err || flag == null){
+            res.json({message:'no flags'});
+            return false;
+        }
+        else {
+            res.json(flag);
+
+        }
+    });
+});
+
 module.exports = router;
