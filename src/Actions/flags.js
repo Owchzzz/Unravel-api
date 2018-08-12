@@ -14,7 +14,7 @@ router.post('/place',(req, res) => {
     fm.description = body.description;
     fm.longlat = body.longlat;
     fm.user_id = req.user._id;
-
+    fm.answer = body.answer;
     fm.save((err, result) => {
         if(err)
             res.json(err);
