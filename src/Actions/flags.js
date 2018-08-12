@@ -6,8 +6,6 @@ router.use(require('../Middleware/authenticated'));
 
 router.post('/place',(req, res) => {
     const FlagModel = mongoose.model('FlagModel');
-    console.log('Authenticated request came in:');
-    console.log(req.user);
     let body = req.body;
     let fm = new FlagModel();
     fm.name = body.name;
