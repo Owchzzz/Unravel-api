@@ -8,7 +8,7 @@ router.use(require('../Middleware/authenticated'));
 router.get('/',(req, res) => {
     const FlagModel = mongoose.model('FlagModel');
     FlagModel.find({}, (err, flags) => {
-        if(err || !flags.length){
+        if(err || flags == null){
             res.json({message:'no flags'});
             return false;
         }
