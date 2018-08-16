@@ -15,12 +15,14 @@ router.post('/update/items',(req, res) => {
             {name: 'pen', qty: 3},
             {name: 'marker', qty: 0}
         ]
-        
+        UserModel.findOneAndUpdate({_id:req.user._id}, {$set:{items}}, (err, doc) => {
+            res.json(doc);
+        });
     } 
     else {
         items = req.user.items;
+        res.json({message:'successfully queried json with obj',items});
     }
-    res.json({message:'successfully queried json with obj',items});
 });
 
 
