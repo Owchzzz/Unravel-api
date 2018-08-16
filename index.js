@@ -14,7 +14,8 @@ const FlagModel = require('./models/flags.model');
 const Auth = require('./src/Auth');
 const Flags = require('./src/Actions/flags');
 const DataFlags = require('./src/Data/flags');
-
+const UserData = require('./src/Data/user');
+const UserActions = require('./src/Actions/user');
 
 mongoose.connect(db);
 mongoose.model('UserModel',UserModel);
@@ -35,7 +36,9 @@ router.get('/', (req,res) => {
 
 router.use('/auth',Auth);
 router.use('/actions/flags',Flags);
+router.use('/actions/user',UserActions);
 router.use('/data/flags',DataFlags);
+router.use('/data/user',UserData);
 
 app.use('/api',router);
 app.listen(port);
