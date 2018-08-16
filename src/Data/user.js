@@ -21,21 +21,12 @@ router.get('/',(req, res) => {
 
 });
 
-router.post('/single',(req, res) => {
-    const FlagModel = mongoose.model('FlagModel');
+router.post('/items',(req, res) => {
+    const UserModel = mongoose.model('UserModel');
     let body = req.body;
-    let _id = body.id;
-    console.log('Searching for single flag with Id:',_id);
-    FlagModel.findOne({_id}, (err, flag) => {
-        if(err || flag == null){
-            res.json({message:'no flags'});
-            return false;
-        }
-        else {
-            res.json(flag);
+    let user = req.user;
 
-        }
-    });
+    console.log(user.items);
 });
 
 
