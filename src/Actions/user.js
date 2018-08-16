@@ -15,7 +15,7 @@ router.post('/update/items',(req, res) => {
             {name: 'pen', qty: 3},
             {name: 'marker', qty: 0}
         ]
-        UserModel.findOneAndUpdate({_id:req.user._id}, {$set:{items}}, (err, doc) => {
+        UserModel.findOneAndUpdate({_id:req.user._id}, {$set:{items}},{new:true}, (err, doc) => {
             res.json(doc);
         });
     } 
