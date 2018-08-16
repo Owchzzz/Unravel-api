@@ -6,7 +6,7 @@ router.use(require('../Middleware/authenticated'));
 
 router.post('/update/items',(req, res) => {
     const UserModel = mongoose.model('UserModel');
-    console.log("requested update to user items:",req.body);
+    console.log("requested update to user items:",req.data);
 
     let items = [];
     if(req.user.items.length == 0 || ! req.user.items) {
