@@ -21,12 +21,13 @@ router.get('/',(req, res) => {
 
 });
 
-router.post('/items',(req, res) => {
+router.get('/items',(req, res) => {
     const UserModel = mongoose.model('UserModel');
     let body = req.body;
     let user = req.user;
 
     console.log(user.items);
+    res.json(user.items);
 });
 
 
