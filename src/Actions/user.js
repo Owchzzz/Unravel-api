@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 
 router.use(require('../Middleware/authenticated'));
 
-router.post('/update/items',(req, res) => {
+router.post('/get/items',(req, res) => {
     const UserModel = mongoose.model('UserModel');
     console.log("requested update to user items:",req.body);
 
@@ -41,5 +41,8 @@ router.post('/update/items',(req, res) => {
     }
 });
 
+router.post('/update/items',(req, res) => {
+    const UserModel = mongoose.model("UserModel");
+});
 
 module.exports = router;
