@@ -43,6 +43,12 @@ router.post('/get/items',(req, res) => {
 
 router.post('/update/items',(req, res) => {
     const UserModel = mongoose.model("UserModel");
+
+    // Parse Items
+
+    UserModel.findOneAndUpdate({}, {$set:{items: req.body.data.items}}, {new:true},(err,doc) => {
+        res.json(doc);
+    });
 });
 
 module.exports = router;
