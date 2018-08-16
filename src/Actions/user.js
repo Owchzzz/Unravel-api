@@ -36,7 +36,7 @@ router.post('/get/items',(req, res) => {
         });
     } 
     else {
-        items = req.user.items;
+        items = {data: req.user.items};
         res.json({message:'successfully queried json with obj',items});
     }
 });
