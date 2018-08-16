@@ -46,7 +46,7 @@ router.post('/update/items',(req, res) => {
 
     // Parse Items
 
-    UserModel.findOneAndUpdate({}, {$set:{items: req.body.data.items}}, {new:true},(err,doc) => {
+    UserModel.findOneAndUpdate({_id:req.user._id}, {$set:{items: req.body.data.items}}, {new:true},(err,doc) => {
         res.json(doc);
     });
 });
