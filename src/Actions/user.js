@@ -6,7 +6,8 @@ router.use(require('../Middleware/authenticated'));
 
 router.post('/update/items',(req, res) => {
     const UserModel = mongoose.model('UserModel');
-    res.json({message:'successfully queried json with obj',req});
+    Debug.Log(req.body);
+    res.json({message:'successfully queried json with obj',items: req.user.items});
 });
 
 
