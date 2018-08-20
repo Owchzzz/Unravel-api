@@ -14,6 +14,12 @@ let UserSchema = new Schema({
         name: String,
         qty: Number
     }
+    ],
+    challenges:[
+        {
+            id: String,
+            status: String,
+        }
     ]
 });
 

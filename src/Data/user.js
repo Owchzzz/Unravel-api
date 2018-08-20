@@ -6,17 +6,10 @@ const mongoose = require('mongoose');
 router.use(require('../Middleware/authenticated'));
 
 router.get('/',(req, res) => {
-    const FlagModel = mongoose.model('FlagModel');
-    FlagModel.find({}, (err, flags) => {
-        if(err || flags == null){
-            res.json({message:'no flags'});
-            return false;
-        }
-        else {
-            res.json(flags);
-
-        }
-        
+    const UserModel = mongoose.model('UserModel');
+    let userId = req.body.userQuery;
+    UserModel.findOne({_id:userId}, (err, character) => {
+        res.json(character);
     });
 
 });
