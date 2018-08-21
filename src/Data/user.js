@@ -9,8 +9,17 @@ router.post('/single',(req, res) => {
     const UserModel = mongoose.model('UserModel');
     let userId = req.body.userQuery;
     UserModel.findOne({_id:userId}, (err, character) => {
-        console.log(character);
-        res.json(character);
+
+        if(err) {
+            console.log(err);
+            res.json(err);
+        }
+        else {
+
+            console.log(character);
+            res.json(character);
+        }
+        
     });
 
 });
