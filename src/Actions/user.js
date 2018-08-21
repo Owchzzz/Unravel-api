@@ -4,6 +4,10 @@ const mongoose = require('mongoose');
 
 router.use(require('../Middleware/authenticated'));
 
+router.post("/get/me",(req,res) => {
+    res.json(req.user);
+});
+
 router.post('/get/items',(req, res) => {
     const UserModel = mongoose.model('UserModel');
     console.log("requested update to user items:",req.body);
@@ -60,6 +64,11 @@ router.post("/get/single",(req,res) => {
         }
 
     });
+});
+
+router.post("/update/score",(req,res) => {
+    const UserModel = mongoose.model("UserModel");
+    UserModel.findOneAndUpdate()
 });
 
 router.post('/update/items',(req, res) => {

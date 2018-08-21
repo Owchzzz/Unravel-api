@@ -20,7 +20,8 @@ let UserSchema = new Schema({
             id: String,
             status: String,
         }
-    ]
+    ],
+    score: Number
 });
 
 
