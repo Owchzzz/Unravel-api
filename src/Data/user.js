@@ -5,10 +5,11 @@ const mongoose = require('mongoose');
 
 router.use(require('../Middleware/authenticated'));
 
-router.get('/',(req, res) => {
+router.post('/',(req, res) => {
     const UserModel = mongoose.model('UserModel');
     let userId = req.body.userQuery;
     UserModel.findOne({_id:userId}, (err, character) => {
+        console.log(character);
         res.json(character);
     });
 
