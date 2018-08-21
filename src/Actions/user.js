@@ -43,6 +43,25 @@ router.post('/get/items',(req, res) => {
     }
 });
 
+router.post("/get/single",(req,res) => {
+    console.log('single user data request filed');
+    const UserModel = mongoose.model('UserModel');
+    let userId = req.body.userQuery;
+    UserModel.findOne({_id:userId}, (err, character) => {
+
+        if(err) {
+            console.log(err);
+            res.json(err);
+        }
+        else {
+
+            console.log(character);
+            res.json(character);
+        }
+
+    });
+});
+
 router.post('/update/items',(req, res) => {
     const UserModel = mongoose.model("UserModel");
 
