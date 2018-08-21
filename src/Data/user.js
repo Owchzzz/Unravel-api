@@ -5,7 +5,7 @@ const mongoose = require('mongoose');
 
 router.use(require('../Middleware/authenticated'));
 
-router.post('/',(req, res) => {
+router.post('/single',(req, res) => {
     const UserModel = mongoose.model('UserModel');
     let userId = req.body.userQuery;
     UserModel.findOne({_id:userId}, (err, character) => {
