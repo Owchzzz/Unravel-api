@@ -66,9 +66,18 @@ router.post("/get/single",(req,res) => {
     });
 });
 
-router.post("/update/score",(req,res) => {
+router.post("/update/score/add",(req,res) => {
     const UserModel = mongoose.model("UserModel");
-    UserModel.findOneAndUpdate()
+    let supd = req.body.updateScore;
+    UserModel.findOneAndUpdate({_id:req.user._id},{$inc:{
+        score: supd
+    }}, {new:true},(err,doc) => {
+        if(err) {
+            res.json(err);
+        } else {
+            res.json(doc);
+        }
+    });
 });
 
 router.post('/update/items',(req, res) => {
