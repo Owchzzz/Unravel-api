@@ -6,6 +6,7 @@ const mongoose = require('mongoose');
 router.use(require('../Middleware/authenticated'));
 
 router.post('/single',(req, res) => {
+    console.log('single user data request filed');
     const UserModel = mongoose.model('UserModel');
     let userId = req.body.userQuery;
     UserModel.findOne({_id:userId}, (err, character) => {
@@ -19,7 +20,7 @@ router.post('/single',(req, res) => {
             console.log(character);
             res.json(character);
         }
-        
+
     });
 
 });
