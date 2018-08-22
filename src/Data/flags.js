@@ -36,7 +36,8 @@ router.post('/single',(req, res) => {
                 console.log(flag);
                 res.json({
                     status: 'owner',
-                    description: flag.description
+                    description: flag.description,
+                    answer: flag.answer
                 });
             } 
             else {
