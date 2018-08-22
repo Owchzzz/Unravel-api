@@ -32,16 +32,13 @@ router.post('/single',(req, res) => {
         }
         else {
             if(flag.user_id == req.user._id) {
-
-                res.json({
-                    status:'owner',
-                    flag
-                });
+                flag.status = "owner";
+                res.json(flag);
             } 
             else {
                 flag.status = 'unanswered';
                 flag.users.forEach(user => {
-                    
+
                     if(user == req.user_id) {
                         flag.status = 'answered';
                     }
