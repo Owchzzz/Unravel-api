@@ -36,16 +36,31 @@ router.post('/get/answer',(req,res) => {
 });
 router.post('/answer',(req,res) => {
     const FlagModel = mongoose.model("FlagModel");
+    const UserModel = mongoose.model("UserModel");
+
     let body = req.body;
     let answer = body.answer;
     let flagid = body.flagid;
 
+    let rand = Math.floor((Math.random() * 300) + 200);;
+
     FlagModel.findOne({_id:flagid},(err,doc) => {
         if(doc.answer == answer) {
+
+            // First update owner
+            UserModel.findOneAndUpdate({_id:req.user._id},{$inc:{score:rand}},{upsert:true},(err,doc)=>{});
+            UserModel.findOneAndUpdate({_id:doc.user_id},{$inc:{score:rand}},{upsert:true},(err,doc)=>{});
+
             res.json({
                 status:'correct'
             });
+
+
         } else {
+            rand = rand * -1;
+            UserModel.findOneAndUpdate({_id:req.user._id},{$inc:{score:rand}},{upsert:true},(err,doc)=>{});
+            UserModel.findOneAndUpdate({_id:doc.user_id},{$inc:{score:rand}},{upsert:true},(err,doc)=>{});
+
             res.json({
                 status:'wrong'
             });
