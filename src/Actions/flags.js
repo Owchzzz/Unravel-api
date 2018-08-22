@@ -24,5 +24,33 @@ router.post('/place',(req, res) => {
     });
 });
 
+router.post('/get/answer',(req,res) => {
+    const FlagModel = mongoose.model("FlagModel");
+    let body = req.body;
+    let answer = body.answer;
+    let flagid = body.flagid;
+
+    FlagModel.findOne({_id:flagid},(err,doc) => {
+       res.json({answer: doc.answer});
+    });
+});
+router.post('/answer',(req,res) => {
+    const FlagModel = mongoose.model("FlagModel");
+    let body = req.body;
+    let answer = body.answer;
+    let flagid = body.flagid;
+
+    FlagModel.findOne({_id:flagid},(err,doc) => {
+        if(doc.answer == answer) {
+            res.json({
+                status:'correct'
+            });
+        } else {
+            res.json({
+                status:'wrong'
+            });
+        }
+    });
+});
 
 module.exports = router;

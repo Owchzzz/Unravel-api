@@ -10,10 +10,11 @@ router.post("/get/me",(req,res) => {
 
 router.post('/get/items',(req, res) => {
     const UserModel = mongoose.model('UserModel');
-    console.log("requested update to user items:",req.body);
 
     let items = [];
     if(req.user.items.length == 0 || ! req.user.items) {
+
+    console.log("requested update to user items:",req.body);
         items = [
             {name: 'razor', qty: 0},
             {name: 'pen', qty: 3},
