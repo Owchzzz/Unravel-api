@@ -45,10 +45,11 @@ router.post('/answer',(req,res) => {
     let rand = Math.floor((Math.random() * 300) + 200);;
 
     FlagModel.findOne({_id:flagid},(err,doc) => {
-        console.log(doc);
-        console.log("Answer:",answer);
+        
         if(doc.answer.toLowerCase() == answer.toLowerCase()) {
-
+            let users = doc.users;
+            users.push(req.user._id);
+            FlagModel.findOneAndUpdate({_id:doc._id},{$set:{users}});
             // First update owner
             UserModel.findOneAndUpdate({_id:req.user._id},{$inc:{score:rand}},{upsert:true},(err,doc)=>{});
             UserModel.findOneAndUpdate({_id:doc.user_id},{$inc:{score:rand}},{upsert:true},(err,doc)=>{});

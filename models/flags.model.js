@@ -6,7 +6,8 @@ let FlagSchema = new Schema({
     name: String,
     description: String,
     answer: String,
-    longlat: String
+    longlat: String,
+    users: [String]
 });
 
 module.exports = FlagSchema;
