@@ -4,6 +4,16 @@ const mongoose = require('mongoose');
 
 router.use(require('../Middleware/authenticated'));
 
+router.post('/get/leaderboards', (req, res) => {
+    const UserModel = mongoose.model('UserModel');
+    let query = UserModel.find({}).sort({'score':-1}).limit(10);
+
+    query.exec((err, users) => {
+        res.json(users);
+    });
+});
+
+
 router.post("/get/me",(req,res) => {
     res.json(req.user);
 });
