@@ -13,7 +13,7 @@ router.post("/",(req,res) => {
     });
 });
 
-router.post("place", (req,res) => {
+router.post("/place", (req,res) => {
     const ThreadModel = mongoose.model("ThreadModel");
     console.log('Thread model: create request');
     let body = req.body;
