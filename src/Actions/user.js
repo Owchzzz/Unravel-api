@@ -9,7 +9,7 @@ router.post('/get/leaderboards', (req, res) => {
     let query = UserModel.find({}).sort({'score':-1}).limit(10);
 
     query.exec((err, users) => {
-        res.json(users);
+        res.json({data: users});
     });
 });
 
