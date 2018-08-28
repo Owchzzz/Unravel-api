@@ -15,7 +15,7 @@ router.post("/",(req,res) => {
 
 router.post("place", (req,res) => {
     const ThreadModel = mongoose.model("ThreadModel");
-
+    console.log('Thread model: create request');
     let body = req.body;
     let fm = new ThreadModel();
     fm.name = body.name;
