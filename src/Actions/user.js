@@ -6,7 +6,7 @@ router.use(require('../Middleware/authenticated'));
 
 router.post('/get/leaderboards', (req, res) => {
     const UserModel = mongoose.model('UserModel');
-    let query = UserModel.find({}).sort({'score':-1}).limit(10);
+    let query = UserModel.find({score:{$gt:0}}).sort({'score':-1}).limit(10);
 
     query.exec((err, users) => {
         res.json({data: users});
