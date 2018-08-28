@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 
 router.use(require('../Middleware/authenticated'));
 
-router.get("/",(req,res) => {
+router.post("/",(req,res) => {
 
     const ThreadModel = mongoose.model("ThreadModel");
     
@@ -13,5 +13,27 @@ router.get("/",(req,res) => {
     });
 });
 
+router.post("place", (req,res) => {
+    const ThreadModel = mongoose.model("ThreadModel");
+
+    let body = req.body;
+    let fm = new ThreadModel();
+    fm.name = body.name;
+    fm.description = body.description;
+    fm.longlat = body.longlat;
+    fm.user_id = req.user._id;
+    fm.title = body.title;
+
+
+    fm.save((err, result) => {
+        if(err || result == null) {
+            res.json(err);
+        }
+        else {
+            res.json(result);
+        }
+            
+    });
+});
 
 module.exports = router;

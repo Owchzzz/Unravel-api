@@ -35,7 +35,7 @@ router.post('/place',(req, res) => {
                         
                 });
             } else {
-                res.json({err: 'Text contains profanity'});
+                res.json({err: 'profanity', message: 'text contains profanity'});
             }
         });
     });
