@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
+const https = require('https');
 
 router.use(require('../Middleware/authenticated'));
 
@@ -13,15 +14,34 @@ router.post('/place',(req, res) => {
     fm.longlat = body.longlat;
     fm.user_id = req.user._id;
     fm.answer = body.answer;
-    fm.save((err, result) => {
-        if(err || result == null) {
-            res.json(err);
-        }
-        else {
-            res.json(result);
-        }
-            
+
+    https.get('https://www.purgomalum.com/service/json?text='+fm.description, (resp) => {
+        let respdata = '';
+
+        resp.on('data', (chunk) => {
+            respdata += chunk;
+        });
+
+        resp.on('end', () => {
+            respdata = JSON.parse(respdata);
+            if(respdata.result !== false) {
+                fm.save((err, result) => {
+                    if(err || result == null) {
+                        res.json(err);
+                    }
+                    else {
+                        res.json(result);
+                    }
+                        
+                });
+            } else {
+                res.json({err: 'Text contains profanity'});
+            }
+        });
     });
+
+    
+    
 });
 
 router.post('/get/answer',(req,res) => {
