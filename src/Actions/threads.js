@@ -9,7 +9,7 @@ router.post("/",(req,res) => {
     const ThreadModel = mongoose.model("ThreadModel");
     
     ThreadModel.find({},(err, threads) => {
-        res.json(threads);
+        res.json({collection: threads});
     });
 });
 
