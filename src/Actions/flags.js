@@ -18,11 +18,12 @@ router.post('/place',(req, res) => {
     FlagModel.find({user: req.user._id},(err, docs) => {
         let length = docs.length;
         if(length < 4) {
-            request('https://www.purgomalum.com/service/json?text='+fm.description, (error, response, resp) => {
+            request('https://www.purgomalum.com/service/containsprofanity?text=' + fm.description, (error, response, resp) => {
                if(!error && response.statusCode == 200) {
                    respdata = JSON.parse(resp);
                    console.log('Response data from purgomalum:',respdata);
                    if(respdata.result !== false) {
+
                        fm.save((err, result) => {
                            if(err || result == null) {
                                res.json(err);
