@@ -55,7 +55,7 @@ router.post("/answer", (req,res) => {
 
     let answer = {
         user: req.user._id,
-        author: req.user.username;
+        author: req.user.username,
         answer: body.answer
     };
     
