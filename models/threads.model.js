@@ -5,6 +5,7 @@ let ThreadSchema = new Schema({
     user_id: String,
     name: String,
     description: String,
+    longlat: String,
     comments: [{
         author_id: String,
         author: String,
