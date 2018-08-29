@@ -15,7 +15,7 @@ router.post('/place',(req, res) => {
     fm.user_id = req.user._id;
     fm.answer = body.answer;
 
-    https.get('https://www.purgomalum.com/service/json?text='+fm.description, (resp) => {
+    https.get('www.purgomalum.com/service/json?text='+fm.description, (resp) => {
         let respdata = '';
 
         resp.on('data', (chunk) => {
