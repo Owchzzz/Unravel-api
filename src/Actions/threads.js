@@ -17,6 +17,7 @@ router.post("/place", (req,res) => {
     const ThreadModel = mongoose.model("ThreadModel");
     console.log('Thread model: create request');
     let body = req.body;
+    
     let fm = new ThreadModel();
     fm.name = body.name;
     fm.description = body.description;
@@ -30,9 +31,27 @@ router.post("/place", (req,res) => {
             res.json(err);
         }
         else {
+            setTimeout(() => {
+                fm.remove(); 
+            },1000*10)
             res.json(result);
         }
             
+    });
+});
+
+
+router.post("/answer", (req,res) => {
+    const ThreadModel = mongoose.model("ThreadModel");
+    let body = req.body;
+
+    let answer = {
+        user: req.user._id,
+        answer: body.answer
+    };
+    
+    ThreadModel.update({id:body._id}, {$push: {answers: answer}},(err, doc)=>{
+        res.json({msg: 'Successfully replied to thread'});
     });
 });
 
