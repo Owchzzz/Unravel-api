@@ -13,6 +13,14 @@ router.post("/",(req,res) => {
     });
 });
 
+router.post("/single",(req,res) => {
+    const ThreadModel = mongoose.model("ThreadModel");
+    let body = req.body;
+
+    ThreadModel.find({_id:body.id}, (err, thread) => {
+        res.json(thread);
+    });
+});
 router.post("/place", (req,res) => {
     const ThreadModel = mongoose.model("ThreadModel");
     console.log('Thread model: create request');
