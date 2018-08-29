@@ -41,7 +41,7 @@ router.post("/place", (req,res) => {
         else {
             setTimeout(() => {
                 fm.remove(); 
-            },1000*5)
+            },1000*60*60*24)
             res.json(result);
         }
             
