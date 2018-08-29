@@ -18,7 +18,7 @@ router.post('/place',(req, res) => {
     FlagModel.find({user: req.user._id},(err, docs) => {
         let length = docs.length;
         if(length < 4) {
-            request('https://www.purgomalum.com/service/json?text='+fm.description, (err, response, resp) => {
+            request('https://www.purgomalum.com/service/json?text='+fm.description, (error, response, resp) => {
                if(!error && response.statusCode == 200) {
                    respdata = JSON.parse(resp);
                    if(respdata.result !== false) {
