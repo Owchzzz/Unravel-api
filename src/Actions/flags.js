@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
-const https = require('https');
+const request = require('request');
 
 router.use(require('../Middleware/authenticated'));
 
@@ -18,29 +18,23 @@ router.post('/place',(req, res) => {
     FlagModel.find({user: req.user._id},(err, docs) => {
         let length = docs.length;
         if(length < 4) {
-            https.get('www.purgomalum.com/service/json?text='+fm.description, (resp) => {
-                let respdata = '';
-        
-                resp.on('data', (chunk) => {
-                    respdata += chunk;
-                });
-        
-                resp.on('end', () => {
-                    respdata = JSON.parse(respdata);
-                    if(respdata.result !== false) {
-                        fm.save((err, result) => {
-                            if(err || result == null) {
-                                res.json(err);
-                            }
-                            else {
-                                res.json(result);
-                            }
-                                
-                        });
-                    } else {
-                        res.json({err: 'profanity', message: 'text contains profanity'});
-                    }
-                });
+            request('https://www.purgomalum.com/service/json?text='+fm.description, (err, response, resp) => {
+               if(!error && response.statusCode == 200) {
+                   respdata = JSON.parse(resp);
+                   if(respdata.result !== false) {
+                       fm.save((err, result) => {
+                           if(err || result == null) {
+                               res.json(err);
+                           }
+                           else {
+                               res.json(result);
+                           }
+                               
+                       });
+                   } else {
+                       res.json({err: 'profanity', message: 'text contains profanity'});
+                   }
+               }
             });
         } else {
             res.json({err:'thread count',msg:'Too many threads'});
