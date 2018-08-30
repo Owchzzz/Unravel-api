@@ -31,6 +31,7 @@ router.post("/place", (req,res) => {
     fm.description = body.description;
     fm.longlat = body.longlat;
     fm.user_id = req.user._id;
+    fm.author = req.user._username;
     fm.title = body.title;
 
 
