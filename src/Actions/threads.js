@@ -17,7 +17,7 @@ router.post("/single",(req,res) => {
     const ThreadModel = mongoose.model("ThreadModel");
     let body = req.body;
 
-    ThreadModel.find({_id:body.id}, (err, thread) => {
+    ThreadModel.findOne({_id:body.id}, (err, thread) => {
         res.json(thread);
     });
 });
