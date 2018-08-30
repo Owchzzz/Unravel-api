@@ -55,9 +55,9 @@ router.post("/answer", (req,res) => {
     let body = req.body;
 
     let answer = {
-        user: req.user._id,
+        author_id: req.user._id,
         author: req.user.username,
-        answer: body.answer
+        content: req.body.answer,
     };
     
     ThreadModel.update({id:body._id}, {$push: {comments: answer}},(err, doc)=>{
