@@ -60,7 +60,7 @@ router.post("/answer", (req,res) => {
         answer: body.answer
     };
     
-    ThreadModel.update({id:body._id}, {$push: {answers: answer}},(err, doc)=>{
+    ThreadModel.update({id:body._id}, {$push: {comments: answer}},(err, doc)=>{
         res.json({msg: 'Successfully replied to thread'});
     });
 });
