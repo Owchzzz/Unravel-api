@@ -4,6 +4,7 @@ const Schema =mongoose.Schema;
 let FlagSchema = new Schema({
     user_id: String,
     name: String,
+    title:String,
     description: String,
     answer: String,
     longlat: String,
