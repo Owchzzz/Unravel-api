@@ -73,10 +73,13 @@ router.post('/answer',(req,res) => {
     let rand = Math.floor((Math.random() * 300) + 200);;
 
     FlagModel.findOne({_id:flagid},(err,doc) => {
-        let users = doc.users;
-        users.push(req.user._id);
+        // let users = doc.users;
+        // users.push(req.user._id);
 
-        FlagModel.findOneAndUpdate({_id:doc._id},{$set:{users}});
+        // FlagModel.findOneAndUpdate({_id:doc._id},{$set:{users}});
+        FlagModel.update({_id:doc._id}, {$push: {users: req.user._id}},(err, doc)=>{
+            console.log('Updated list of users who answered challenge:',doc);
+        });
         if(doc.answer.toLowerCase() == answer.toLowerCase()) {
             
             // First update owner
