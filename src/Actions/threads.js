@@ -37,7 +37,7 @@ router.post("/place", (req,res) => {
     request('https://www.purgomalum.com/service/containsprofanity?text=' + fm.description, (error, response, resp) => {
         if(!error && response.statusCode == 200) {
             respdata = JSON.parse(resp);
-
+            console.log('Purgomalum response:',respdata);
             if(respdata.result == false) {
 
                 fm.save((err, result) => {
@@ -76,7 +76,7 @@ router.post("/answer", (req,res) => {
     request('https://www.purgomalum.com/service/containsprofanity?text=' + answer.body, (error, response, resp) => {
                if(!error && response.statusCode == 200) {
                    respdata = JSON.parse(resp);
-
+                    console.log('Purgomalum response:',respdata);
                    if(respdata.result == false) {
 
                     ThreadModel.update({_id:body._id}, {$push: {comments: answer}},(err, doc)=>{
