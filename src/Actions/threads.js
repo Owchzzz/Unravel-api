@@ -34,24 +34,30 @@ router.post("/place", (req,res) => {
     fm.author = req.user.username;
     fm.title = body.title;
 
-    if(respdata.result == false) {
+    request('https://www.purgomalum.com/service/containsprofanity?text=' + fm.description, (error, response, resp) => {
+        if(!error && response.statusCode == 200) {
+            respdata = JSON.parse(resp);
 
-        fm.save((err, result) => {
-            if(err || result == null) {
-                res.json(err);
-            }
-            else {
-                 setTimeout(()=>{
-                     fm.remove();
-                  },1000*60*60*18);
-                 res.json(result);
+            if(respdata.result == false) {
 
+                fm.save((err, result) => {
+                    if(err || result == null) {
+                        res.json(err);
+                    }
+                    else {
+                         setTimeout(()=>{
+                             fm.remove();
+                          },1000*60*60*18);
+                         res.json(result);
+
+                    }
+                        
+                });
+            } else {
+                res.json({err: 'profanity', message: 'text contains profanity'});
             }
-                
-        });
-    } else {
-        res.json({err: 'profanity', message: 'text contains profanity'});
-    }
+        }
+     });
 
     
 });
@@ -67,9 +73,21 @@ router.post("/answer", (req,res) => {
         content: req.body.answer,
     };
     
-    ThreadModel.update({_id:body._id}, {$push: {comments: answer}},(err, doc)=>{
-        res.json({msg: 'Successfully replied to thread'});
-    });
+    request('https://www.purgomalum.com/service/containsprofanity?text=' + answer.body, (error, response, resp) => {
+               if(!error && response.statusCode == 200) {
+                   respdata = JSON.parse(resp);
+
+                   if(respdata.result == false) {
+
+                    ThreadModel.update({_id:body._id}, {$push: {comments: answer}},(err, doc)=>{
+                        res.json({msg: 'Successfully replied to thread'});
+                    });
+                   } else {
+                       res.json({err: 'profanity', message: 'text contains profanity'});
+                   }
+               }
+            });
+   
 });
 
 module.exports = router;
