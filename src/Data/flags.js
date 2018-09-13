@@ -41,10 +41,19 @@ router.post('/single',(req, res) => {
                 });
             } 
             else {
-               
+                let hasAnswer = false;
+               flag.users.forEach(user => {
+                   if(user == req.user._id) {
+                       hasAnswer = true;
+                   }
+               });
+               let astatus = 'unanswered';
+               if(hasAnswer) {
+                   astatus = 'answered';
+               }
                 let obj = {
                     description: flag.description,
-                    status: 'unanswered',
+                    status: astatus,
                     _id: flag._id,
                     answer: flag.answer,
                 }
