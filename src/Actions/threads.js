@@ -34,7 +34,7 @@ router.post("/place", (req,res) => {
     fm.author = req.user.username;
     fm.title = body.title;
 
-    request('https://www.purgomalum.com/service/containsprofanity?text=' + fm.description, (error, response, resp) => {
+    request('https://www.purgomalum.com/service/containsprofanity?text=' + fm.title +' '+ fm.description, (error, response, resp) => {
         if(!error && response.statusCode == 200) {
             respdata = JSON.parse(resp);
             console.log('Purgomalum response:',respdata);
