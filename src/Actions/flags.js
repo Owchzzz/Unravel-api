@@ -21,8 +21,8 @@ router.post('/place',(req, res) => {
             request('https://www.purgomalum.com/service/containsprofanity?text=' + fm.description, (error, response, resp) => {
                if(!error && response.statusCode == 200) {
                    respdata = JSON.parse(resp);
-                   console.log('Response data from purgomalum:',respdata);
-                   if(respdata.result !== false) {
+
+                   if(respdata.result == false) {
 
                        fm.save((err, result) => {
                            if(err || result == null) {

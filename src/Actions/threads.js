@@ -34,19 +34,26 @@ router.post("/place", (req,res) => {
     fm.author = req.user.username;
     fm.title = body.title;
 
+    if(respdata.result == false) {
 
-    fm.save((err, result) => {
-        if(err || result == null) {
-            res.json(err);
-        }
-        else {
-            setTimeout(() => {
-                fm.remove(); 
-            },1000*60*60*24)
-            res.json(result);
-        }
-            
-    });
+        fm.save((err, result) => {
+            if(err || result == null) {
+                res.json(err);
+            }
+            else {
+                 setTimeout(()=>{
+                     fm.remove();
+                  },1000*60*60*18);
+                 res.json(result);
+
+            }
+                
+        });
+    } else {
+        res.json({err: 'profanity', message: 'text contains profanity'});
+    }
+
+    
 });
 
 
