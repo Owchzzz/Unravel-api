@@ -38,7 +38,7 @@ router.post("/place", (req,res) => {
         if(!error && response.statusCode == 200) {
             respdata = JSON.parse(resp);
             console.log('Purgomalum response:',respdata);
-            if(respdata.result == false) {
+            if(respdata == false) {
 
                 fm.save((err, result) => {
                     if(err || result == null) {
@@ -77,7 +77,7 @@ router.post("/answer", (req,res) => {
                if(!error && response.statusCode == 200) {
                    respdata = JSON.parse(resp);
                     console.log('Purgomalum response:',respdata);
-                   if(respdata.result == false) {
+                   if(respdata == false) {
 
                     ThreadModel.update({_id:body._id}, {$push: {comments: answer}},(err, doc)=>{
                         res.json({msg: 'Successfully replied to thread'});

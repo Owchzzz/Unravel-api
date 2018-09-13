@@ -22,7 +22,7 @@ router.post('/place',(req, res) => {
                if(!error && response.statusCode == 200) {
                    respdata = JSON.parse(resp);
                     console.log('purgomalum response data:',respdata);
-                   if(respdata.result == false) {
+                   if(respdata == false) {
 
                        fm.save((err, result) => {
                            if(err || result == null) {
