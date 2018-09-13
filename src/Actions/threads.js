@@ -73,7 +73,7 @@ router.post("/answer", (req,res) => {
         content: req.body.answer,
     };
     
-    request('https://www.purgomalum.com/service/containsprofanity?text=' + answer.body, (error, response, resp) => {
+    request('https://www.purgomalum.com/service/containsprofanity?text=' + answer.content, (error, response, resp) => {
                if(!error && response.statusCode == 200) {
                    respdata = JSON.parse(resp);
                     console.log('Purgomalum response:',respdata);
