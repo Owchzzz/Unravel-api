@@ -21,7 +21,17 @@ let UserSchema = new Schema({
             status: String,
         }
     ],
-    score: Number
+    score: Number,
+    notifications:[
+        {
+            type: String,
+            status: String,
+            title: String,
+            description: String,
+            trait: String,
+            points: Number
+        }
+    ],
 });
 
 

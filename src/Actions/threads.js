@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
 const request = require('request');
+const rewards = require('../Rewards');
+
 router.use(require('../Middleware/authenticated'));
 
 router.post("/",(req,res) => {
@@ -42,6 +44,7 @@ router.post("/place", (req,res) => {
 
                 fm.save((err, result) => {
                     if(err || result == null) {
+                        rewards("challenge",req.user._id);
                         res.json(err);
                     }
                     else {
@@ -80,6 +83,11 @@ router.post("/answer", (req,res) => {
                    if(respdata == false) {
 
                     ThreadModel.update({_id:body._id}, {$push: {comments: answer}},(err, doc)=>{
+                        if(doc.user_id !== req.user._id) {
+                            rewards('replied',req.user._id);
+                            rewards('recieve-reply',doc.user_id);
+                        }
+                        
                         res.json({msg: 'Successfully replied to thread'});
                     });
                    } else {

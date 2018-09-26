@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
 const request = require('request');
-
+const rewards = require('../Rewards');
 router.use(require('../Middleware/authenticated'));
 
 router.post('/place',(req, res) => {

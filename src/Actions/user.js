@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
-
+const rewards = require('../Rewards');
 router.use(require('../Middleware/authenticated'));
 
 router.post('/get/leaderboards', (req, res) => {
@@ -69,7 +69,7 @@ router.post("/get/single",(req,res) => {
             res.json(err);
         }
         else {
-
+            rewards('answered',userId);
             console.log(character);
             res.json(character);
         }
@@ -80,7 +80,6 @@ router.post("/get/single",(req,res) => {
 router.post("/update/score/add",(req,res) => {
     const UserModel = mongoose.model("UserModel");
     let supd = req.body.updateScore;
-
 
     UserModel.findOneAndUpdate({_id:req.user._id},{$inc:{
         score: supd
