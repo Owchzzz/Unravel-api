@@ -44,7 +44,7 @@ router.post("/place", (req,res) => {
 
                 fm.save((err, result) => {
                     if(err || result == null) {
-                        rewards("challenge",req.user._id);
+                        rewards("posted",req.user._id);
                         res.json(err);
                     }
                     else {

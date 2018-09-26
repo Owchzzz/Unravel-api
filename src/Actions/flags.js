@@ -25,6 +25,7 @@ router.post('/place',(req, res) => {
                    if(respdata == false) {
 
                        fm.save((err, result) => {
+                           rewards("challenge",req.user._id);
                            if(err || result == null) {
                                res.json(err);
                            }
@@ -83,18 +84,20 @@ router.post('/answer',(req,res) => {
         if(doc.answer.toLowerCase() == answer.toLowerCase()) {
             
             // First update owner
-            UserModel.findOneAndUpdate({_id:req.user._id},{$inc:{score:rand}},{upsert:true},(err,doc)=>{});
-            UserModel.findOneAndUpdate({_id:doc.user_id},{$inc:{score:rand}},{upsert:true},(err,doc)=>{});
+            // UserModel.findOneAndUpdate({_id:req.user._id},{$inc:{score:rand}},{upsert:true},(err,doc)=>{});
+            // UserModel.findOneAndUpdate({_id:doc.user_id},{$inc:{score:rand}},{upsert:true},(err,doc)=>{});
 
+            rewards("answered",req.user._id);
+            rewards("player-answered",doc.user_id);
             res.json({
                 status:'correct'
             });
 
 
         } else {
-            rand = rand * -1;
-            UserModel.findOneAndUpdate({_id:req.user._id},{$inc:{score:rand}},{upsert:true},(err,doc)=>{});
-            UserModel.findOneAndUpdate({_id:doc.user_id},{$inc:{score:rand}},{upsert:true},(err,doc)=>{});
+            // rand = rand * -1;
+            // UserModel.findOneAndUpdate({_id:req.user._id},{$inc:{score:rand}},{upsert:true},(err,doc)=>{});
+            // UserModel.findOneAndUpdate({_id:doc.user_id},{$inc:{score:rand}},{upsert:true},(err,doc)=>{});
 
             res.json({
                 status:'wrong'
