@@ -57,9 +57,9 @@ module.exports = (type,user_id) => {
             case 'challenge':
             return 'posted a challenge';
             break;
-            case 'answered';
+            case 'answered':
             return 'answered';
-
+            break;
         }
     };
 
