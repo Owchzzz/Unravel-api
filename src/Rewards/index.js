@@ -14,7 +14,7 @@ module.exports = (type,user_id) => {
             message = "You placed a challenge";
             trait = "effecive-communicator";
             break;
-            
+
         case 'answered':
             points = 20;
             message = "You were able to answer the question correctly";
@@ -54,7 +54,12 @@ module.exports = (type,user_id) => {
 
     let formatTitle = (x) => {
         switch (x) {
-            
+            case 'challenge':
+            return 'posted a challenge';
+            break;
+            case 'answered';
+            return 'answered';
+
         }
     };
 
@@ -63,12 +68,13 @@ module.exports = (type,user_id) => {
     let notif = {
         type: trait,
         status: 'ready',
-        title: formatTitle(trait),
+        title: 'Successfull action',
         description: message,
         points: points
     }
-
+    console.log("updating points for user:",user_id);
     UserModel.update({_id:user_id}, {$push:{notifications: notif}}, (err, doc) => {
+        console.log('Found: ',doc);
         UserModel.update({_id:user_id},{$inc:{points: notif.points}},(err, doc) => {
             console.log('Updated points');
             console.log(doc);
