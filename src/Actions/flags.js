@@ -25,11 +25,15 @@ router.post('/place',(req, res) => {
                    if(respdata == false) {
 
                        fm.save((err, result) => {
-                           rewards("challenge",req.user._id);
+                           
                            if(err || result == null) {
                                res.json(err);
                            }
                            else {
+                            setTimeout(() => {
+                                console.log("firing method for updating score");
+                                rewards("challenge",req.user._id);
+                            },5000);
                                 setTimeout(()=>{
                                     fm.remove();
                                  },1000*60*60*18);
@@ -86,9 +90,11 @@ router.post('/answer',(req,res) => {
             // First update owner
             // UserModel.findOneAndUpdate({_id:req.user._id},{$inc:{score:rand}},{upsert:true},(err,doc)=>{});
             // UserModel.findOneAndUpdate({_id:doc.user_id},{$inc:{score:rand}},{upsert:true},(err,doc)=>{});
-
-            rewards("answered",req.user._id);
-            rewards("player-answered",doc.user_id);
+            setTimeout(()=>{
+                rewards("answered",req.user._id);
+                rewards("player-answered",doc.user_id);
+            
+            },5000);
             res.json({
                 status:'correct'
             });

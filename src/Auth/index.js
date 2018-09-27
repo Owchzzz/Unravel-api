@@ -26,8 +26,6 @@ router.post('/login', (req, res) => {
 
         const UserModel = mongoose.model('UserModel');
 
-        
-
             UserModel.findOneAndUpdate({
                 username: req.body.username,
                 password: req.body.password
@@ -37,22 +35,16 @@ router.post('/login', (req, res) => {
                     res.end();
                 }
                 else {
-                    if(! typeof result.notifications !== 'undefined') {
-                        res.json(result);
-                        res.end();
-                    }
-                    else {
-                        UserModel.findOneAndUpdate({_id:result._id},{$set:{notifications: []}}, {new:true}, (err, result) => {
-                            rewards("new-account",result._id);
-                        });
-                    }
+                    console.log('Logged in with notif:',result.notifications)
+                    res.json(result);
+                    res.end();
+                    
                 }
             });
         
     } catch(Error) {
         console.log('Error when loggin in user');
     }
-
 });
 
 router.post('/logout', (req, res) => {

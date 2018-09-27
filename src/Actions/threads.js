@@ -44,10 +44,11 @@ router.post("/place", (req,res) => {
 
                 fm.save((err, result) => {
                     if(err || result == null) {
-                        rewards("posted",req.user._id);
                         res.json(err);
                     }
                     else {
+
+                        rewards("posted",req.user._id);
                          setTimeout(()=>{
                              fm.remove();
                           },1000*60*60*18);
@@ -82,7 +83,7 @@ router.post("/answer", (req,res) => {
                     console.log('Purgomalum response:',respdata);
                    if(respdata == false) {
 
-                    ThreadModel.update({_id:body._id}, {$push: {comments: answer}},(err, doc)=>{
+                    ThreadModel.findOneAndUpdate({_id:body._id}, {$push: {comments: answer}},(err, doc)=>{
                         if(doc.user_id !== req.user._id) {
                             rewards('replied',req.user._id);
                             rewards('recieve-reply',doc.user_id);

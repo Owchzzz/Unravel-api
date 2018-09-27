@@ -1,6 +1,14 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
+let NotificationSchema = new Schema({
+    type: String,
+    status: String,
+    title: String,
+    description: String,
+    trait: String,
+    points: Number
+});
 let UserSchema = new Schema({
     username: {
         type: String,
@@ -22,16 +30,7 @@ let UserSchema = new Schema({
         }
     ],
     score: Number,
-    notifications:[
-        {
-            type: String,
-            status: String,
-            title: String,
-            description: String,
-            trait: String,
-            points: Number
-        }
-    ],
+    notifications:[NotificationSchema],
 });
 
 

@@ -13,9 +13,19 @@ router.post('/get/leaderboards', (req, res) => {
     });
 });
 
-
 router.post("/get/me",(req,res) => {
     res.json(req.user);
+});
+router.post("/get/me/notifications",(req,res) => {
+    res.json({data:req.user.notifications});
+});
+
+router.post("/clear/notifications",(req,res) => {
+
+    const UserModel = mongoose.model('UserModel');
+    UserModel.findOneAndUpdate({_id:req.user._id},{$set:{notifications:[]}},{new:true, upsert:true},(err, doc) => {
+        res.json(doc);
+    });
 });
 
 router.post('/get/items',(req, res) => {
@@ -81,16 +91,17 @@ router.post("/update/score/add",(req,res) => {
     const UserModel = mongoose.model("UserModel");
     let supd = req.body.updateScore;
 
-    UserModel.findOneAndUpdate({_id:req.user._id},{$inc:{
-        score: supd
-    }}, {upsert:true},(err,doc) => {
-        console.log("upserted score");
-        if(err) {
-            res.json(err);
-        } else {
-            res.json(doc);
-        }
-    });
+    rewards("maze",req.user._id);
+    // UserModel.findOneAndUpdate({_id:req.user._id},{$inc:{
+    //     score: supd
+    // }}, {upsert:true},(err,doc) => {
+    //     console.log("upserted score");
+    //     if(err) {
+    //         res.json(err);
+    //     } else {
+    //         res.json(doc);
+    //     }
+    // });
 });
 
 router.post('/update/items',(req, res) => {
