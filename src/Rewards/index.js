@@ -9,6 +9,11 @@ module.exports = (type,user_id) => {
     let message = 'Action';
     let trait = "";
     switch(type) {
+        case 'new-account':
+            points = 100;
+            message = "Welcome to unravel!";
+            trait = "new";
+            break;
         case 'challenge':
             points = 50;
             message = "You placed a challenge";
@@ -55,11 +60,13 @@ module.exports = (type,user_id) => {
     let formatTitle = (x) => {
         switch (x) {
             case 'challenge':
-            return 'posted a challenge';
-            break;
+                return 'posted a challenge';
+            
             case 'answered':
-            return 'answered';
-            break;
+                return 'answered';
+            
+            case 'new':
+                return 'welcome';
         }
     };
 
@@ -73,6 +80,8 @@ module.exports = (type,user_id) => {
         points: points
     }
     console.log("updating points for user:",user_id);
+
+
     UserModel.update({_id:user_id}, {$push:{notifications: notif}}, (err, doc) => {
         console.log('Found: ',doc);
         UserModel.update({_id:user_id},{$inc:{points: notif.points}},(err, doc) => {

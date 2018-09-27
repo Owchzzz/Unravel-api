@@ -37,8 +37,15 @@ router.post('/login', (req, res) => {
                     res.end();
                 }
                 else {
-                    res.json(result);
-                    res.end();
+                    if(! typeof result.notifications !== 'undefined') {
+                        res.json(result);
+                        res.end();
+                    }
+                    else {
+                        UserModel.findOneAndUpdate({_id:result._id},{$set:{notifications: []}}, {new:true}, (err, result) => {
+                            rewards("new-account",result._id);
+                        });
+                    }
                 }
             });
         
